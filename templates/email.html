@@ -1,0 +1,24 @@
+
+<img src="cid:my_plot.png" style="width:542px; height: 100px; border: 1px solid #dddddd;"> 
+<br />
+--
+<br />
+<table border="1" style="  border-collapse: collapse; border: 1px solid black;">
+        <tr> 
+                    <th width="200" style="padding: 6px; text-align: left;color:black;">Date</th>
+                    <th width="100" style="padding: 6px; text-align: left;color:black;">Count</th>  
+           
+                </tr>
+     {% for r in result %}
+    <tr>
+      <td  style="padding: 6px; text-align: left; color:black;">{{ r.day }}</td>
+      <td  style="padding: 6px; text-align: left; color:black;">{{ r.count }}</td>  
+    </tr>
+    {% endfor %}
+    
+    </table>
+
+    <hr />
+
+
+

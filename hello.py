@@ -42,9 +42,9 @@ def sendmail():
     fig.savefig('my_plot.png',dpi = 200) 
     day = res[0]['day'].strftime('%Y-%m-%d')
     count = res[0]['count'] 
-    msg = Message("Doodle Blast 模型上传数 {}日{}次".format(day,count),
-                  sender="no-reply-backup@appcoachs.com",
-                  recipients=["guowei.he@appcoachs.com"])
+    msg = Message("Recent users: {}:{} times".format(day,count),
+                  sender="no-reply@yourdomain.com",
+                  recipients=["recipient@yourdomain.com"])
     html = render_template('email.html', result=res)
     msg.body = html
     msg.html = html
@@ -79,9 +79,8 @@ class Database:
                 FROM  fos_user 
                 WHERE last_login >  (NOW() - INTERVAL {} DAY)
                 GROUP BY DATE(last_login)
-                ORDER BY `day` {}}
-                LIMIT {}; 
-                ;
+                ORDER BY `day` {}
+                LIMIT {};  
                 '''.format(num,direction,num)
         self.cur.execute(sql)
         result = self.cur.fetchall()
@@ -91,6 +90,14 @@ def db_query(num,direction):
     db = Database()
     emps = db.list(num,direction)
     return emps
+
+def fig_to_base64(fig):
+    img = io.BytesIO()
+    fig.savefig(img, format='png',
+                bbox_inches='tight')
+    img.seek(0)
+
+    return base64.b64encode(img.getvalue())
 
 
 if __name__ == '__main__': 
